@@ -1,0 +1,29 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+_public_hdrs = [
+    "include/boost/*.hpp",
+    "include/boost/mpl/*.hpp",
+    "include/boost/mpl/limits/*.hpp",
+    "include/boost/mpl/list/*.hpp",
+    "include/boost/mpl/map/*.hpp",
+    "include/boost/mpl/math/*.hpp",
+    "include/boost/mpl/multiset/*.hpp",
+    "include/boost/mpl/set/*.hpp",
+    "include/boost/mpl/vector/*.hpp",
+]
+
+cc_library(
+    name = "mpl_internal",
+    hdrs = glob(["include/boost/**/*.hpp"], exclude = _public_hdrs),
+    deps = [
+        "@boost//preprocessor",
+    ],
+)
+
+cc_library(
+    name = "mpl",
+    visibility = ["//visibility:public"],
+    includes = ["include"],
+    hdrs = glob(_public_hdrs),
+    deps = [":mpl_internal"],
+)
