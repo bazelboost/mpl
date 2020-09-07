@@ -16,6 +16,7 @@ cc_library(
     name = "mpl_internal",
     hdrs = glob(["include/boost/**/*.hpp"], exclude = _public_hdrs),
     deps = [
+        "@boost//config",
         "@boost//preprocessor",
     ],
 )
